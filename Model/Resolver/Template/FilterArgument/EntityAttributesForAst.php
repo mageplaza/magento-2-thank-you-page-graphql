@@ -22,7 +22,10 @@ declare(strict_types=1);
 
 namespace Mageplaza\ThankYouPageGraphQl\Model\Resolver\Template\FilterArgument;
 
+use Magento\Framework\GraphQl\Config\Element\Field;
+use Magento\Framework\GraphQl\ConfigInterface;
 use Magento\Framework\GraphQl\Query\Resolver\Argument\FieldEntityAttributesInterface;
+use Mageplaza\ThankYouPage\Helper\Data;
 
 /**
  * Class EntityAttributesForAst
@@ -43,15 +46,27 @@ class EntityAttributesForAst implements FieldEntityAttributesInterface
         'created_at',
         'updated_at',
     ];
+    /**
+     * @var Data
+     */
+    protected $helperData;
+    /**
+     * @var ConfigInterface
+     */
+    protected $config;
 
     /**
      * EntityAttributesForAst constructor.
      *
-     * @param array $additionalAttributes
+     * @param Data $helperData
+     * @param ConfigInterface $config
      */
-    public function __construct(array $additionalAttributes = [])
-    {
-        $this->additionalAttributes = array_merge($this->additionalAttributes, $additionalAttributes);
+    public function __construct(
+        Data $helperData,
+        ConfigInterface $config
+    ) {
+        $this->helperData = $helperData;
+        $this->config     = $config;
     }
 
     /**
@@ -60,8 +75,13 @@ class EntityAttributesForAst implements FieldEntityAttributesInterface
     public function getEntityAttributes(): array
     {
         $fields = [];
-        foreach ($this->additionalAttributes as $attribute) {
-            $fields[$attribute] = 'String';
+        /** @var Field $field */
+        foreach ($this->config->getConfigElement('MageplazaThankYouPageTemplates')->getFields() as $field) {
+            $fieldName          = $field->getName();
+            $fields[$fieldName] = ['type' => 'String', 'fieldName' => $fieldName];
+        }
+        if ($this->helperData->versionCompare('2.3.4')) {
+            return $fields;
         }
 
         return array_keys($fields);
