@@ -1,71 +1,19 @@
 type Query {
-    mpThankYouPage(
-        filter: MageplazaThankYouPageFilterInput @doc(description: "Identifies which Mageplaza Thank You Page attributes to search for and return."),
-        pageSize: Int = 5 @doc(description: "Number of items should be shown on the page"),
-        currentPage: Int = 1 @doc(description: "Allow page number to start from 1")
-    ):MageplazaThankYouPageOutput @resolver(class: "Mageplaza\\ThankYouPageGraphQl\\Model\\Resolver\\ThankYouPage") @doc(description: "Queries search for Mageplaza Thank You Page that match the filtered criteria.")
+    mpOrderSuccessPage(
+        orderId: Int @doc(description: "Order ID"),
+        storeId: Int @doc(description: "Store View Id"),
+        customerGroup: Int @doc(description: "Customer Group Id"),
+    ):OrderSuccessPageOutput @resolver(class: "Mageplaza\\ThankYouPageGraphQl\\Model\\Resolver\\OrderSuccess") @doc(description: "Queries for Order Success Page that match Order ID.")
+    mpSubscribeSuccessPage(
+        email: String @doc(description: "Email for subscribe"),
+        storeId: Int @doc(description: "Store View Id"),
+        customerGroup: Int @doc(description: "Customer Group Id"),
+    ):SubscribeSuccessPageOutput @resolver(class: "Mageplaza\\ThankYouPageGraphQl\\Model\\Resolver\\SubscribeSuccess") @doc(description: "Queries for Subscribe Success Page that match Email.")
 }
 
-input MageplazaThankYouPageFilterInput {
-    template_id: FilterTypeInput @doc(description: "Template Id")
-    name: FilterTypeInput @doc(description: "Name")
-    page_type: FilterTypeInput @doc(description: "Page Type")
-    status: FilterTypeInput @doc(description: "Status")
-    priority: FilterTypeInput @doc(description: "Priority")
-    style: FilterTypeInput @doc(description: "Style")
-    custom_style: FilterTypeInput @doc(description: "Custom Style")
-    created_at: FilterTypeInput @doc(description: "Created At")
-    updated_at: FilterTypeInput @doc(description: "Updated At")
+type OrderSuccessPageOutput {
+    html: String @doc(description: "The HTML and CSS of order success page")
 }
-type MageplazaThankYouPageOutput {
-    total_count: Int @doc(description: "The total number of results returned when a query is applied"),
-    items: [MageplazaThankYouPageTemplates] @doc(description: "MageplazaThankYouPageTemplates data is satisfied")
-    page_info: SearchResultPageInfo @doc(description: "An object that includes the page info and current page values specified in the query")
-}
-
-type MageplazaThankYouPageTemplates {
-  template_id: Int @doc(description: "Template Id")
-  name: String @doc(description: "Name")
-  page_type: String @doc(description: "Page Type")
-  status: Int @doc(description: "Status")
-  store_ids: String @doc(description: "Store Ids")
-  customer_group_ids: String @doc(description: "Customer Group Ids")
-  priority: Int @doc(description: "Priority")
-  condition: SaleCondition @doc(description: "Conditions for applying template")
-  style: String @doc(description: "Style")
-  custom_style: Int @doc(description: "Custom Style")
-  title: String @doc(description: "Title")
-  sub_title: String @doc(description: "Sub Title")
-  description: String @doc(description: "Description")
-  continue_button: Int @doc(description: "Continue Button")
-  block: String @doc(description: "Block")
-  custom_html: String @doc(description: "Custom Html")
-  custom_css: String @doc(description: "Custom Css")
-  static_block_1: Int @doc(description: "Static Block 1")
-  static_block_2: Int @doc(description: "Static Block 2")
-  social_share: Int @doc(description: "Social Share")
-  enable_coupon: Int @doc(description: "Enable Coupon")
-  rule_id: Int @doc(description: "Rule Id for coupon")
-  coupon_pattern: String @doc(description: "Coupon Pattern")
-  coupon_label: String @doc(description: "Coupon Label")
-  enable_faq: Int @doc(description: "Enable Faq")
-  faq_title: String @doc(description: "Faq Title")
-  faq_category: Int @doc(description: "Faq Category")
-  faq_limit: Int @doc(description: "Faq Limit")
-  enable_product_slider: Int @doc(description: "Enable Product Slider")
-  product_slider_id: String @doc(description: "Product Slider Id")
-  product_slider_title: String @doc(description: "Product Slider Title")
-  product_slider_limit: Int @doc(description: "Product Slider Limit")
-  product_slider_additional: String @doc(description: "Product Slider Additional")
-  created_at: String @doc(description: "Creation date of the template")
-  updated_at: String @doc(description: "Last modification date of the template")
-}
-
-type SaleCondition {
-    type: String @doc(description: "Condition Type")
-    aggregator: String @doc(description: "Aggregator Type")
-    operator: String @doc(description: "Operator")
-    value: String @doc(description: "Condition Value")
-    attribute_name: String @doc(description: "Condition Value")
-    conditions: [SaleCondition] @doc(description: "Conditions")
+type SubscribeSuccessPageOutput {
+    html: String @doc(description: "The HTML and CSS of subscribe success page")
 }
