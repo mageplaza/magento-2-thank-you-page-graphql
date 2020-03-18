@@ -1,8 +1,6 @@
 type Query {
     mpOrderSuccessPage(
-        orderId: String @doc(description: "Order ID"),
-        storeId: Int @doc(description: "Store View Id"),
-        customerGroup: Int @doc(description: "Customer Group Id"),
+        orderId: String @doc(description: "Order ID")
     ):OrderSuccessPageOutput @resolver(class: "Mageplaza\\ThankYouPageGraphQl\\Model\\Resolver\\OrderSuccess") @doc(description: "Queries for Order Success Page that match Order ID.")
     mpSubscribeSuccessPage(
         email: String @doc(description: "Email for subscribe"),
