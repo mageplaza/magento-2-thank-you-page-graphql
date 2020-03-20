@@ -78,15 +78,12 @@ class SubscribeSuccess implements ResolverInterface
             $args['customerGroup'] = null;
         }
 
-        $html = '';
-        if (isset($args['email'])) {
-            $html = $this->thankYouPageRepository->getSubsPage(
-                $args['email'],
-                $args['storeId'],
-                $args['customerGroup']
-            );
-        }
+        $template = $this->thankYouPageRepository->getSubsPage(
+            $args['email'],
+            $args['storeId'],
+            $args['customerGroup']
+        );
 
-        return ['html' => $html];
+        return $template;
     }
 }

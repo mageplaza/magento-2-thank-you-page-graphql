@@ -1,17 +1,48 @@
 type Query {
     mpOrderSuccessPage(
         orderId: String @doc(description: "Order ID")
-    ):OrderSuccessPageOutput @resolver(class: "Mageplaza\\ThankYouPageGraphQl\\Model\\Resolver\\OrderSuccess") @doc(description: "Queries for Order Success Page that match Order ID.")
+    ):MageplazaThankYouPageTemplates @resolver(class: "Mageplaza\\ThankYouPageGraphQl\\Model\\Resolver\\OrderSuccess") @doc(description: "Queries for Order Success Page that match Order ID.")
     mpSubscribeSuccessPage(
         email: String @doc(description: "Email for subscribe"),
         storeId: Int @doc(description: "Store View Id"),
         customerGroup: Int @doc(description: "Customer Group Id"),
-    ):SubscribeSuccessPageOutput @resolver(class: "Mageplaza\\ThankYouPageGraphQl\\Model\\Resolver\\SubscribeSuccess") @doc(description: "Queries for Subscribe Success Page that match Email.")
+    ):MageplazaThankYouPageTemplates @resolver(class: "Mageplaza\\ThankYouPageGraphQl\\Model\\Resolver\\SubscribeSuccess") @doc(description: "Queries for Subscribe Success Page that match Email.")
 }
 
-type OrderSuccessPageOutput {
-    html: String @doc(description: "The HTML and CSS of order success page")
-}
-type SubscribeSuccessPageOutput {
-    html: String @doc(description: "The HTML and CSS of subscribe success page")
+type MageplazaThankYouPageTemplates {
+  template_id: Int @doc(description: "Template Id")
+  name: String @doc(description: "Name")
+  page_type: String @doc(description: "Page Type")
+  status: Int @doc(description: "Status")
+  store_ids: String @doc(description: "Store Ids")
+  customer_group_ids: String @doc(description: "Customer Group Ids")
+  priority: Int @doc(description: "Priority")
+  style: String @doc(description: "Style")
+  custom_style: Int @doc(description: "Custom Style")
+  title: String @doc(description: "Title")
+  sub_title: String @doc(description: "Sub Title")
+  description: String @doc(description: "Description")
+  continue_button: Int @doc(description: "Continue Button")
+  block: String @doc(description: "Block")
+  custom_html: String @doc(description: "Custom Html")
+  custom_css: String @doc(description: "Custom Css")
+  html: String @doc(description: "HTML complete")
+  static_block_1: Int @doc(description: "Static Block 1")
+  static_block_2: Int @doc(description: "Static Block 2")
+  social_share: Int @doc(description: "Social Share")
+  enable_coupon: Int @doc(description: "Enable Coupon")
+  rule_id: Int @doc(description: "Rule Id for coupon")
+  coupon_pattern: String @doc(description: "Coupon Pattern")
+  coupon_label: String @doc(description: "Coupon Label")
+  enable_faq: Int @doc(description: "Enable Faq")
+  faq_title: String @doc(description: "Faq Title")
+  faq_category: Int @doc(description: "Faq Category")
+  faq_limit: Int @doc(description: "Faq Limit")
+  enable_product_slider: Int @doc(description: "Enable Product Slider")
+  product_slider_id: String @doc(description: "Product Slider Id")
+  product_slider_title: String @doc(description: "Product Slider Title")
+  product_slider_limit: Int @doc(description: "Product Slider Limit")
+  product_slider_additional: String @doc(description: "Product Slider Additional")
+  created_at: String @doc(description: "Creation date of the template")
+  updated_at: String @doc(description: "Last modification date of the template")
 }

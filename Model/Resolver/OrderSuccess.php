@@ -71,11 +71,6 @@ class OrderSuccess implements ResolverInterface
             throw new GraphQlInputException(__('"orderId" should be specified'));
         }
 
-        $html = '';
-        if (isset($args['orderId'])) {
-            $html = $this->thankYouPageRepository->getOrderPage($args['orderId']);
-        }
-
-        return ['html' => $html];
+        return $this->thankYouPageRepository->getOrderPage($args['orderId']);
     }
 }
