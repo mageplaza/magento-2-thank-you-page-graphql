@@ -22,12 +22,15 @@ declare(strict_types=1);
 
 namespace Mageplaza\ThankYouPageGraphQl\Model\Resolver;
 
+use Magento\Authorization\Model\UserContextInterface;
 use Magento\Framework\GraphQl\Config\Element\Field;
 use Magento\Framework\GraphQl\Exception\GraphQlInputException;
+use Magento\Framework\GraphQl\Query\Resolver\ContextInterface;
 use Magento\Framework\GraphQl\Query\ResolverInterface;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
 use Mageplaza\ThankYouPage\Helper\Data;
 use Mageplaza\ThankYouPage\Model\ThankYouPageRepository;
+use Magento\Framework\Authorization\PolicyInterface;
 
 /**
  * Class OrderSuccess
@@ -35,28 +38,37 @@ use Mageplaza\ThankYouPage\Model\ThankYouPageRepository;
  */
 class OrderSuccess implements ResolverInterface
 {
+    const RESOURCE = 'Mageplaza_ThankYouPage::thankyoupage';
 
     /**
      * @var Data
      */
     protected $helperData;
+
     /**
      * @var ThankYouPageRepository
      */
     protected $thankYouPageRepository;
 
     /**
-     * ThankYouPage constructor.
-     *
+     * @var PolicyInterface
+     */
+    private $aclPolicy;
+
+    /**
+     * OrderSuccess constructor.
      * @param Data $helperData
      * @param ThankYouPageRepository $thankYouPageRepository
+     * @param PolicyInterface $aclPolicy
      */
     public function __construct(
         Data $helperData,
-        ThankYouPageRepository $thankYouPageRepository
+        ThankYouPageRepository $thankYouPageRepository,
+        PolicyInterface $aclPolicy
     ) {
-        $this->helperData = $helperData;
+        $this->helperData             = $helperData;
         $this->thankYouPageRepository = $thankYouPageRepository;
+        $this->aclPolicy              = $aclPolicy;
     }
 
     /**
@@ -67,10 +79,28 @@ class OrderSuccess implements ResolverInterface
         if (!$this->helperData->isEnabled()) {
             throw new GraphQlInputException(__('The module is disabled'));
         }
+
+        if (!$this->isAllowed($context)) {
+            throw new GraphQlInputException(__("The consumer isn't authorized to access %1", self::RESOURCE));
+        }
+
         if (!isset($args['orderId'])) {
             throw new GraphQlInputException(__('"orderId" should be specified'));
         }
 
         return $this->thankYouPageRepository->getOrderPage($args['orderId']);
+    }
+
+    /**
+     * @param ContextInterface $context
+     * @return mixed
+     */
+    public function isAllowed($context)
+    {
+        $type     = [UserContextInterface::USER_TYPE_INTEGRATION, UserContextInterface::USER_TYPE_ADMIN];
+        $userType = $context->getUserType();
+
+        return in_array($userType, $type, true) &&
+               $this->aclPolicy->isAllowed($context->getUserId(), self::RESOURCE);
     }
 }
