@@ -1,5 +1,10 @@
-## Documentation
 
-- Installation guide: https://www.mageplaza.com/install-magento-2-extension/#solution-1-ready-to-paste
-- User guide: http://docs.mageplaza.com/thank-you-page/
-- Report a security issue to security@mageplaza.com
+## How to install
+
+Run the following command in Magento 2 root folder:
+
+```
+composer require mageplaza/module-thank-you-page-graphql
+php bin/magento setup:upgrade
+php bin/magento setup:static-content:deploy
+```
