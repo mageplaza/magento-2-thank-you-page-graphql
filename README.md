@@ -11,7 +11,7 @@ php bin/magento setup:static-content:deploy
 
 ## How to use
 
-Mageplaza’s Membership GraphQL supports to get the rule’s template when making subscribe newsletter and order through GraphQL
+**Mageplaza’s Membership GraphQL** supports to get the rule’s template when making subscribe newsletter and order through GraphQL
 
 To start working with **Membership GraphQL** in Magento, you need to:
 
