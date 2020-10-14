@@ -15,7 +15,7 @@ php bin/magento setup:static-content:deploy
 
 To start working with **Membership GraphQL** in Magento, you need to:
 
-- Use Magento 2.3.x. Return your site to developer mode
+- Use Magento 2.3.x or higher. Return your site to developer mode
 - Refer to the GraphQL requests we support https://documenter.getpostman.com/view/10589000/SzRuWrN4?version=latest
 
 ![thank you page](https://i.imgur.com/wlDIdws.png)
