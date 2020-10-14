@@ -1,4 +1,4 @@
-
+# Magento 2 Thank You Page GraphQL / PWA
 ## How to install
 
 Run the following command in Magento 2 root folder:
